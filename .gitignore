@@ -12,7 +12,6 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 [Uu]ser[Ss]ettings/
-.vsconfig
 
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
@@ -24,8 +23,9 @@
 [Aa]ssets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
-.vs/
-
+.vscode/
+itch
+publish/
 # Gradle cache directory
 .gradle/
 
