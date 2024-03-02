@@ -51,10 +51,12 @@ public class RaycastAttack : NetworkBehaviour
                 {
                     Debug.Log("Dealing damage");
                     health.DealDamageRpc(Damage);
-                }
-                if (gameObject.TryGetComponent<Score>(out var score))
-                {
-                    score.DealScoreRpc(1);
+
+                    // Check if the shield is not active before dealing score
+                    if (!health.IsShieldActive() && gameObject.TryGetComponent<Score>(out var score))
+                    {
+                        score.DealScoreRpc(1);
+                    }
                 }
             }
         }

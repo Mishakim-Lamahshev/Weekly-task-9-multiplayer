@@ -1,23 +1,44 @@
 using Fusion;
 using UnityEngine;
+using System.Collections;
 
 public class Health : NetworkBehaviour
 {
-    [SerializeField] NumberField HealthDisplay;
+    [SerializeField] private NumberField HealthDisplay;
 
-    [Networked(OnChanged = nameof(NetworkedHealthChanged))]
+    [Networked(OnChanged = nameof(OnNetworkedHealthChanged))]
     public int NetworkedHealth { get; set; } = 100;
-    private static void NetworkedHealthChanged(Changed<Health> changed) {
-        // Here you would add code to update the player's healthbar.
-        Debug.Log($"Health changed to: {changed.Behaviour.NetworkedHealth}");
+
+    [Networked] private bool isShieldActive { get; set; } = false; // Track shield state
+
+    public bool IsShieldActive()
+    {
+        return isShieldActive;
+    }
+
+    private static void OnNetworkedHealthChanged(Changed<Health> changed)
+    {
         changed.Behaviour.HealthDisplay.SetNumber(changed.Behaviour.NetworkedHealth);
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    // All players can call this function; only the StateAuthority receives the call.
-    public void DealDamageRpc(int damage) {
-        // The code inside here will run on the client which owns this object (has state and input authority).
-        Debug.Log("Received DealDamageRpc on StateAuthority, modifying Networked variable");
+    public void DealDamageRpc(int damage)
+    {
+        if (isShieldActive) return; // Ignore damage if shield is active
+
         NetworkedHealth -= damage;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void ActivateShieldRpc(float duration)
+    {
+        StartCoroutine(ShieldDuration(duration));
+    }
+
+    private IEnumerator ShieldDuration(float duration)
+    {
+        isShieldActive = true;
+        yield return new WaitForSeconds(duration);
+        isShieldActive = false;
     }
 }
