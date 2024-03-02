@@ -15,6 +15,11 @@ This is our weekly task for week 9, focusing on multiplayer.
 - **Power-ups**: Use the shield to protect yourself and gain a strategic advantage.
 - **Responsive Controls**: Smooth and intuitive controls for moving, jumping, and shooting.
 
+## New Features
+
+- **Scoring System**: Each hit on an opponent increases your score, adding a competitive edge to the game.
+- **Shield Mechanic**: Collecting a shield power-up grants you 10 seconds of invulnerability, adding depth and strategy to combat.
+
 ## Play Online
 
 Get started with "Weekly Task 9: Multiplayer Game" by playing it online. Click the link below to play:
