@@ -24,7 +24,9 @@
 
 # Visual Studio cache directory
 .vscode/
-itch
+itch/
+localBuild/
+
 publish/
 # Gradle cache directory
 .gradle/
